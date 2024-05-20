@@ -1,0 +1,20 @@
+/broken_reboot:
+  summary:
+    test storing test artifacts before reboot
+  discover:
+    how: fmf
+  execute:
+    how: tmt
+
+/tests:
+  /01_log_plan_data:
+    test: echo foobar > ${TMT_PLAN_DATA}/plan_log.txt
+  /02_log_test_data:
+    test: echo foobar > ${TMT_TEST_DATA}/test_log.txt
+  /03_do_damage_and_reboot:
+    test: |
+      rm -f /boot/vmlinuz*
+      ls /boot > ${TMT_PLAN_DATA}/ls_boot.txt
+      ls /boot > ${TMT_TEST_DATA}/ls_boot.txt
+      tmt-reboot -t 300
+    duration: 10m
