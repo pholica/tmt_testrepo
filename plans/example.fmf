@@ -1,20 +1,19 @@
-/broken_reboot:
+/timeout_exit_first:
   summary:
-    test storing test artifacts before reboot
+    test exit-first when timeout
   discover:
     how: fmf
   execute:
     how: tmt
+    exit-first: true
 
 /tests:
-  /01_log_plan_data:
-    test: echo foobar > ${TMT_PLAN_DATA}/plan_log.txt
-  /02_log_test_data:
-    test: echo foobar > ${TMT_TEST_DATA}/test_log.txt
-  /03_do_damage_and_reboot:
-    test: |
-      rm -f /boot/vmlinuz*
-      ls /boot > ${TMT_PLAN_DATA}/ls_boot.txt
-      ls /boot > ${TMT_TEST_DATA}/ls_boot.txt
-      tmt-reboot -t 300
-    duration: 10m
+  /01_timeout_sleep:
+    test: sleep 60
+    duration: 30s
+  /02_just_pass:
+    test: 'true'
+  /03_just_fail:
+    test: 'false'
+  /04_just_pass:
+    test: 'true'
