@@ -11,10 +11,12 @@
     test: |
       echo "TMT_PLAN_DATA='${TMT_PLAN_DATA}'"
       echo plan_data_foobar | tee ${TMT_PLAN_DATA}/plan_log.txt
+      touch /root/01_log_plan_data
   /02_log_test_data:
     test: |
       echo "TMT_TEST_DATA='${TMT_TEST_DATA}'"
       echo test_data_foobar | tee ${TMT_TEST_DATA}/test_log.txt
+      touch /root/02_log_test_data
   /03_do_damage_and_reboot:
     test: |
       set +x
