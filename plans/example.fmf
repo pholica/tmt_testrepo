@@ -8,13 +8,19 @@
 
 /tests:
   /01_log_plan_data:
-    test: echo foobar > ${TMT_PLAN_DATA}/plan_log.txt
+    test: |
+      echo "TMT_PLAN_DATA='${TMT_PLAN_DATA}'"
+      echo plan_data_foobar | tee ${TMT_PLAN_DATA}/plan_log.txt
   /02_log_test_data:
-    test: echo foobar > ${TMT_TEST_DATA}/test_log.txt
+    test: |
+      echo "TMT_TEST_DATA='${TMT_TEST_DATA}'"
+      echo test_data_foobar | tee ${TMT_TEST_DATA}/test_log.txt
   /03_do_damage_and_reboot:
     test: |
+      set +x
+      [[ $REBOOTCOUNT != 0 ]] && exit 0
       rm -f /boot/vmlinuz*
-      ls /boot > ${TMT_PLAN_DATA}/ls_boot.txt
-      ls /boot > ${TMT_TEST_DATA}/ls_boot.txt
+      ls /boot | tee ${TMT_PLAN_DATA}/ls_boot.txt
+      ls /boot | tee ${TMT_TEST_DATA}/ls_boot.txt
       tmt-reboot -t 300
-    duration: 10m
+    duration: 1m
