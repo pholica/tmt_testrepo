@@ -17,7 +17,14 @@
       echo "TMT_TEST_DATA='${TMT_TEST_DATA}'"
       echo test_data_foobar | tee ${TMT_TEST_DATA}/test_log.txt
       touch /root/02_log_test_data
-  /03_do_damage_and_reboot:
+  /03_list_root:
+    test: |
+      ls /root
+      ls /root/01_log_plan_data || exit 1
+      rm /root/01_log_plan_data
+      ls /root/02_log_test_data || exit 1
+      rm /root/02_log_plan_data
+  /04_do_damage_and_reboot:
     test: |
       set +x
       [[ $REBOOTCOUNT != 0 ]] && exit 0
