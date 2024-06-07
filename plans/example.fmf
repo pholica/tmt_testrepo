@@ -19,7 +19,7 @@
     test: |
       set +x
       [[ $REBOOTCOUNT != 0 ]] && exit 0
-      rm -f /boot/vmlinuz*
+      #rm -f /boot/vmlinuz*
       ls /boot | tee ${TMT_PLAN_DATA}/ls_boot.txt
       ls /boot | tee ${TMT_TEST_DATA}/ls_boot.txt
       tmt-reboot -t 300
