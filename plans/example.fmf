@@ -23,4 +23,4 @@
       ls /root/01_log_plan_data || exit 1
       rm /root/01_log_plan_data
       ls /root/02_log_test_data || exit 1
-      rm /root/02_log_plan_data
+      rm /root/02_log_test_data
