@@ -1,26 +1,29 @@
-/broken_reboot:
+/plan1:
   summary:
-    test storing test artifacts before reboot
+    test plan1
+  discover:
+    how: fmf
+  execute:
+    how: tmt
+
+/plan2:
+  summary:
+    test plan1
   discover:
     how: fmf
   execute:
     how: tmt
 
 /tests:
-  /01_log_plan_data:
+  /01_exit_0:
     test: |
-      echo "TMT_PLAN_DATA='${TMT_PLAN_DATA}'"
-      echo plan_data_foobar | tee ${TMT_PLAN_DATA}/plan_log.txt
-  /02_log_test_data:
+      exit 0
+  /02_exit_1:
     test: |
-      echo "TMT_TEST_DATA='${TMT_TEST_DATA}'"
-      echo test_data_foobar | tee ${TMT_TEST_DATA}/test_log.txt
-  /03_do_damage_and_reboot:
+      exit 1
+  /03_exit_2:
     test: |
-      set +x
-      [[ $REBOOTCOUNT != 0 ]] && exit 0
-      rm -f /boot/vmlinuz*
-      ls /boot | tee ${TMT_PLAN_DATA}/ls_boot.txt
-      ls /boot | tee ${TMT_TEST_DATA}/ls_boot.txt
-      tmt-reboot -t 300
-    duration: 1m
+      exit 2
+  /04_exit_0:
+    test: |
+      exit 0
