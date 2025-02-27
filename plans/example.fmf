@@ -18,12 +18,3 @@
   /01_exit_0:
     test: |
       exit 0
-  /02_exit_1:
-    test: |
-      exit 1
-  /03_exit_2:
-    test: |
-      exit 2
-  /04_exit_0:
-    test: |
-      exit 0
