@@ -1,15 +1,4 @@
-tag:
-  - foo
-
-/plan1:
-  summary:
-    test plan1
-  discover:
-    how: fmf
-  execute:
-    how: tmt
-
-/plan2:
+/some_plan:
   summary:
     test plan1
   discover:
