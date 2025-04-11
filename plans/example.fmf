@@ -1,26 +1,18 @@
 /broken_reboot:
   summary:
-    test storing test artifacts before reboot
+    test process control when invoking tmt-reboot
   discover:
     how: fmf
   execute:
     how: tmt
 
 /tests:
-  /01_log_plan_data:
+  /01_check_process_control:
+    path: /
     test: |
-      echo "TMT_PLAN_DATA='${TMT_PLAN_DATA}'"
-      echo plan_data_foobar | tee ${TMT_PLAN_DATA}/plan_log.txt
-  /02_log_test_data:
+      #!/bin/bash -xe
+      time ./check_process_control.py
+  /02_detect_side_effect_files:
     test: |
-      echo "TMT_TEST_DATA='${TMT_TEST_DATA}'"
-      echo test_data_foobar | tee ${TMT_TEST_DATA}/test_log.txt
-  /03_do_damage_and_reboot:
-    test: |
-      set +x
-      [[ $REBOOTCOUNT != 0 ]] && exit 0
-      rm -f /boot/vmlinuz*
-      ls /boot | tee ${TMT_PLAN_DATA}/ls_boot.txt
-      ls /boot | tee ${TMT_TEST_DATA}/ls_boot.txt
-      tmt-reboot -t 300
-    duration: 1m
+      sleep 10
+      ls -1 /tmp/side_effect_*
